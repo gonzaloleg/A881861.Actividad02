@@ -85,6 +85,28 @@ namespace OperadorCable
                         } while (coladeOrdenes.Count > 0);
                         continuar = true;
                         break;
+
+                    case 2:
+                        Console.WriteLine("Órdenes por operador\n------------------");
+                        foreach (KeyValuePair<int,int> op in listaOperadores)
+                        {
+                            Console.WriteLine($"Operador nº {op.Key} - Cantidad de órdenes procesadas {op.Value}");
+                        }
+                        if (coladeOrdenes.Count > 0)
+                        {
+                            Console.WriteLine("Órdenes pendientes de asignación\n--------------------------");
+                            foreach (int orden in coladeOrdenes)
+                            {
+                                Console.WriteLine(orden);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No quedan órdenes de trabajo sin asignar.");
+                        }
+                        continuar = false;
+                        break;
+
                         
                 }
             } while (continuar);
