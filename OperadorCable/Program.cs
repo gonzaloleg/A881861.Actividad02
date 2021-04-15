@@ -10,6 +10,10 @@ namespace OperadorCable
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Bienvenido al Sistema de Operadores de Cable. Pulse una tecla para comenzar.");
+            Console.ReadKey();
+            Console.Clear();
+
             Dictionary<int, int> listaOperadores = new Dictionary<int, int>();
             
             //Establezco un tope de operadores de acuerdo al tipo de negocio
@@ -25,10 +29,66 @@ namespace OperadorCable
 
             Queue<int> coladeOrdenes = new Queue<int>();
 
-            for (int j = 1; j < cantOperadores + 1; j++)
+            //Asigno un numero de ID a cada orden de manera secuencial
+            for (int j = 1; j < cantOrdenes + 1; j++)
             {
                 coladeOrdenes.Enqueue(j);
             }
+
+            Console.Clear();
+            bool continuar = true;
+
+            do
+            {
+                Console.WriteLine("1 - Asignar una orden a un operador");
+                Console.WriteLine("2 - Obtener reporte y finalizar programa");
+                Console.WriteLine("\nEn la siguiente pantalla se le será solicitado el número de opción. Presione una tecla para continuar.");
+                Console.ReadKey();
+                continuar = true;
+
+                int menu = ValidarNumero(1, 2, "Ingrese número de opción deseada:");
+
+                switch (menu)
+                {
+                    case 1:
+                        Console.Clear();
+                        do
+                        {
+                            int seleccion = ValidarNumero(1, cantOperadores, "Ingrese Identificador de operador para asignar la siguiente orden");
+                            coladeOrdenes.Dequeue();
+                            listaOperadores[seleccion] = +1;
+                            Console.Clear();
+
+                            bool continuar2 = true;
+                            do
+                            {
+                                Console.WriteLine("¿Desea volver a asignar una orden a un operador?");
+                                Console.WriteLine("1 - SI");
+                                Console.WriteLine("2 - NO");
+                                int seleccion2 = ValidarNumero(1, 2, "Ingrese opción");
+
+                                if (seleccion2 == 1)
+                                {
+                                    seleccion = ValidarNumero(1, cantOperadores, "Ingrese Identificador de operador para asignar la siguiente orden");
+                                    coladeOrdenes.Dequeue();
+                                    listaOperadores[seleccion] = +1;
+                                    Console.Clear();
+
+                                    continuar2 = true;
+                                }
+                                if (seleccion2 == 2)
+                                {
+                                    continuar2 = false;
+                                }
+                            } while (continuar2);
+
+                        } while (coladeOrdenes.Count > 0);
+                        continuar = true;
+                        break;
+                        
+                }
+            } while (continuar);
+            
 
 
         }
@@ -42,7 +102,7 @@ namespace OperadorCable
 
                 Console.Clear();
                 Console.WriteLine(msj);
-                Console.WriteLine($"\nCantidad mínima de operadores: {min} \nCantidad máxima de operadores: {max}");
+                Console.WriteLine($"\nCantidad mínima: {min} \nCantidad máxima: {max}");
 
                 if (!int.TryParse(Console.ReadLine(), out res))
                 {
