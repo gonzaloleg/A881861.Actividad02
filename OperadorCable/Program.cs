@@ -10,57 +10,51 @@ namespace OperadorCable
     {
         static void Main(string[] args)
         {
-            //Ingreso operadores
-
-            Console.WriteLine("Ingrese cantidad de operadores: ");
-            string ingreso = Console.ReadLine(); 
-            int cantOperadores;
-
-            bool ok = int.TryParse(ingreso, out cantOperadores);
-
-            do
-            {
-                Console.WriteLine("Por favor ingrese un número: ");
-                ingreso = Console.ReadLine();
-                ok = int.TryParse(ingreso, out cantOperadores);
-            } while (!ok);
-
-            do
-            {
-                Console.WriteLine("Debe ingresar un numero positivo: ");
-                ingreso = Console.ReadLine();
-                ok = int.TryParse(ingreso, out cantOperadores);
-            } while (cantOperadores <= 0);
-
-            //Ingreso ordenes de trabajo
-
-            Console.WriteLine("Ingrese cantidad de órdenes de trabajo: ");
-            string ingreso2 = Console.ReadLine();
-            int cantOrdenes;
-
-            ok = int.TryParse(ingreso2, out cantOrdenes);
-
-            do
-            {
-                Console.WriteLine("Por favor ingrese un número: ");
-                ingreso2 = Console.ReadLine();
-                ok = int.TryParse(ingreso2, out cantOrdenes);
-            } while (!ok);
-
-            do
-            {
-                Console.WriteLine("Debe ingresar un numero positivo: ");
-                ingreso2 = Console.ReadLine();
-                ok = int.TryParse(ingreso2, out cantOrdenes);
-            } while (cantOrdenes <= 0);
-
+            Dictionary<int, int> listaOperadores = new Dictionary<int, int>();
             
+            //Establezco un tope de operadores de acuerdo al tipo de negocio
+            int cantOperadores = ValidarNumero(1, 100, "¿Cuántos operadores desea cargar?");
 
+            //Le asigno de manera secuencial un numero de ID a c/ operador
+            for (int i = 1; i < cantOperadores +1 ; i++)
+            {
+                listaOperadores.Add(i,0);
+            }
 
+            int cantOrdenes = ValidarNumero(1, 400, "¿Cuántas órdenes de trabajo desea cargar?");
 
+            Queue<int> coladeOrdenes = new Queue<int>();
+
+            for (int j = 1; j < cantOperadores + 1; j++)
+            {
+                coladeOrdenes.Enqueue(j);
+            }
 
 
         }
+        static int ValidarNumero(int min, int max, string msj)
+        {
+            //Validar que el número esté dentro de los parámetros solicitados
+            int res;
+
+            do
+            {
+
+                Console.Clear();
+                Console.WriteLine(msj);
+                Console.WriteLine($"\nCantidad mínima de operadores: {min} \nCantidad máxima de operadores: {max}");
+
+                if (!int.TryParse(Console.ReadLine(), out res))
+                {
+                    Console.WriteLine("Por favor ingrese un número válido.");
+                    res = -1;
+                }
+
+            } while (res < min || res > max);
+
+            return res;
+        }
     }
+
     
 }
