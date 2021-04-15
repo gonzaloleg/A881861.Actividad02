@@ -119,7 +119,7 @@ namespace OperadorCable
                             Console.WriteLine("\nÓrdenes pendientes de asignación\n--------------------------");
                             foreach (int orden in coladeOrdenes)
                             {
-                                Console.WriteLine(orden);
+                                Console.WriteLine($"Orden número: {orden}");
                             }
                         }
                         else
@@ -128,6 +128,11 @@ namespace OperadorCable
                         }
                         continuar = false;
                         Console.ReadKey();
+                        Console.Clear();
+                        Console.WriteLine("Gracias por utilizar el sistema.");
+                        Console.WriteLine("Presione una tecla para salir.");
+                        Console.ReadKey();
+                        System.Environment.Exit(0);
                         break;
 
                         
@@ -152,7 +157,7 @@ namespace OperadorCable
                 Console.WriteLine("\nÓrdenes pendientes de asignación\n--------------------------");
                 foreach (int orden in coladeOrdenes)
                 {
-                    Console.WriteLine(orden);
+                    Console.WriteLine($"Orden número: {orden}");
                 }
             }
             else
