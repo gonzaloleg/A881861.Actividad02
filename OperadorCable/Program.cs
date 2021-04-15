@@ -45,11 +45,12 @@ namespace OperadorCable
                 Console.Clear();
                 Console.WriteLine("1 - Asignar una orden a un operador");
                 Console.WriteLine("2 - Obtener reporte y finalizar programa");
+                
                 Console.WriteLine("\nEn la siguiente pantalla se le será solicitado el número de opción. Presione una tecla para continuar.");
                 Console.ReadKey();
                 continuar = true;
 
-                int menu = ValidarNumero(1, 2, "Ingrese número de opción deseada:");
+                int menu = ValidarNumero(1, 2, "1- Asignar       2- Reporte");
 
                 switch (menu)
                 {
@@ -72,7 +73,7 @@ namespace OperadorCable
                                 Console.WriteLine("2 - NO");
                                 Console.WriteLine("En la siguiente pantalla se le solicitará su opción..");
                                 Console.ReadKey();
-                                int seleccion2 = ValidarNumero(1, 2, "Ingrese opción");
+                                int seleccion2 = ValidarNumero(1, 2, "1-SI   2-NO");
 
                                 if (seleccion2 == 1)
                                 {
