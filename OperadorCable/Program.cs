@@ -40,6 +40,9 @@ namespace OperadorCable
 
             do
             {
+                if (coladeOrdenes.Count > 0) 
+                {
+                Console.Clear();
                 Console.WriteLine("1 - Asignar una orden a un operador");
                 Console.WriteLine("2 - Obtener reporte y finalizar programa");
                 Console.WriteLine("\nEn la siguiente pantalla se le será solicitado el número de opción. Presione una tecla para continuar.");
@@ -88,6 +91,7 @@ namespace OperadorCable
                                     {
                                         Console.Clear();
                                         Console.WriteLine("No hay órdenes pendientes de asignación.");
+                                        Console.ReadKey();
                                         continuar2 = false;
                                         continuar = false;
                                     }
@@ -128,7 +132,36 @@ namespace OperadorCable
 
                         
                 }
+                }
+                else
+                {
+                    continuar = false;
+                }
             } while (continuar);
+
+            Console.Clear();
+            Console.WriteLine("Órdenes por operador\n------------------");
+
+            foreach (KeyValuePair<int, int> op in listaOperadores)
+            {
+                Console.WriteLine($"\nOperador nº {op.Key} - Cantidad de órdenes procesadas {op.Value}");
+            }
+
+            if (coladeOrdenes.Count > 0)
+            {
+                Console.WriteLine("\nÓrdenes pendientes de asignación\n--------------------------");
+                foreach (int orden in coladeOrdenes)
+                {
+                    Console.WriteLine(orden);
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nNo quedan órdenes de trabajo sin asignar.");
+            }
+
+            Console.ReadKey();
+            
 
             Console.Clear();
             Console.WriteLine("Gracias por utilizar el sistema.");
