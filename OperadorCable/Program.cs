@@ -56,7 +56,9 @@ namespace OperadorCable
                         {
                             int seleccion = ValidarNumero(1, cantOperadores, "Ingrese Identificador de operador para asignar la siguiente orden");
                             coladeOrdenes.Dequeue();
-                            listaOperadores[seleccion] = +1;
+                            
+                            listaOperadores.TryGetValue(seleccion, out int contador);
+                            listaOperadores[seleccion] = contador +1;
                             Console.Clear();
 
                             bool continuar2 = true;
@@ -65,36 +67,52 @@ namespace OperadorCable
                                 Console.WriteLine("¿Desea volver a asignar una orden a un operador?");
                                 Console.WriteLine("1 - SI");
                                 Console.WriteLine("2 - NO");
+                                Console.WriteLine("En la siguiente pantalla se le solicitará su opción..");
+                                Console.ReadKey();
                                 int seleccion2 = ValidarNumero(1, 2, "Ingrese opción");
 
                                 if (seleccion2 == 1)
                                 {
-                                    seleccion = ValidarNumero(1, cantOperadores, "Ingrese Identificador de operador para asignar la siguiente orden");
-                                    coladeOrdenes.Dequeue();
-                                    listaOperadores[seleccion] = +1;
-                                    Console.Clear();
+                                    if (coladeOrdenes.Count > 0)
+                                    {
+
+                                        seleccion = ValidarNumero(1, cantOperadores, "Ingrese Identificador de operador para asignar la siguiente orden");
+                                        coladeOrdenes.Dequeue();
+                                        listaOperadores.TryGetValue(seleccion, out int contador2);
+                                        listaOperadores[seleccion] = contador2 + 1;
+                                        Console.Clear();
 
                                     continuar2 = true;
+                                    }
+                                    else
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("No hay órdenes pendientes de asignación.");
+                                        continuar2 = false;
+                                        continuar = false;
+                                    }
                                 }
                                 if (seleccion2 == 2)
                                 {
                                     continuar2 = false;
+                                    continuar = false;
                                 }
                             } while (continuar2);
 
-                        } while (coladeOrdenes.Count > 0);
+                        } while (continuar && coladeOrdenes.Count > 0);
                         continuar = true;
                         break;
 
                     case 2:
+                        Console.Clear();
                         Console.WriteLine("Órdenes por operador\n------------------");
                         foreach (KeyValuePair<int,int> op in listaOperadores)
                         {
-                            Console.WriteLine($"Operador nº {op.Key} - Cantidad de órdenes procesadas {op.Value}");
+                            Console.WriteLine($"\nOperador nº {op.Key} - Cantidad de órdenes procesadas {op.Value}");
                         }
                         if (coladeOrdenes.Count > 0)
                         {
-                            Console.WriteLine("Órdenes pendientes de asignación\n--------------------------");
+                            Console.WriteLine("\nÓrdenes pendientes de asignación\n--------------------------");
                             foreach (int orden in coladeOrdenes)
                             {
                                 Console.WriteLine(orden);
@@ -102,21 +120,25 @@ namespace OperadorCable
                         }
                         else
                         {
-                            Console.WriteLine("No quedan órdenes de trabajo sin asignar.");
+                            Console.WriteLine("\nNo quedan órdenes de trabajo sin asignar.");
                         }
                         continuar = false;
+                        Console.ReadKey();
                         break;
 
                         
                 }
             } while (continuar);
-            
 
+            Console.Clear();
+            Console.WriteLine("Gracias por utilizar el sistema.");
+            Console.WriteLine("Presione una tecla para salir.");
+            Console.ReadKey();
 
         }
         static int ValidarNumero(int min, int max, string msj)
         {
-            //Validar que el número esté dentro de los parámetros solicitados
+            //Validar el ingreso del usuario.
             int res;
 
             do
@@ -124,7 +146,7 @@ namespace OperadorCable
 
                 Console.Clear();
                 Console.WriteLine(msj);
-                Console.WriteLine($"\nCantidad mínima: {min} \nCantidad máxima: {max}");
+                Console.WriteLine($"\nNo puede ingresar un valor menor a : {min} \nNo puede ingresar un valor mayor a: {max}");
 
                 if (!int.TryParse(Console.ReadLine(), out res))
                 {
